@@ -1,0 +1,340 @@
+\documentclass[11pt]{article}
+
+\usepackage[french]{babel}
+
+\usepackage[T1]{fontenc}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{mathtools}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{tikz}
+\usepackage{hyperref}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usetikzlibrary{quantikz2,babel}
+
+\tikzset{qcircuit/.style={
+    column sep=.9cm,
+    row sep=0.7cm,
+    operator/.style={draw=black!80, line width=0.5pt, fill=gray!5, minimum height=0.7cm, minimum width=0.7cm},
+    phase/.style={draw=black!80, fill=black!20, circle, minimum size=4pt},
+    slice/.style={font=\footnotesize\itshape, color=gray!50, dashed}
+}}
+
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+   \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\makeatother
+
+\newcommand{\moy}[1]{\langle #1 \rangle}
+\newcommand{\pDer}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pDerd}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+
+\newcounter{questioncounter}
+\newenvironment{question}[1]{
+\refstepcounter{questioncounter}
+\noindent\rule{0.05\textwidth}{1pt}\,\,\raisebox{-.3\ht\strutbox}{\textbf{Question \thequestioncounter \hspace{5mm} #1}}\,\,\vhrulefill{1pt}\par\vspace{0.4cm}
+}{\par}
+
+%======================================================
+%en-tete
+%======================================================
+\begin{document}
+\selectlanguage{french}
+\noindent{\Large Anthony Wroblewski} \hfill {\Large \today}\\
+{\Large Nathan Brochu}
+
+\par\vspace{5mm}
+\begin{center}
+   {\Large PHQ344 - Physique Statistique 1} \\ \vspace{5mm}
+   {\LARGE\sffamily Devoir \#1} \\ \vspace{5mm}
+\end{center}
+
+%======================================================
+%question 1
+%======================================================
+\begin{question}{Élimination du bruit}
+On note $a = \text{signal total}$, \quad $a_s= \text{signal désiré}$, \quad $a_b = \text{bruit}$, 
+
+On a que: 
+$$\sqrt{(\Delta a_b)^2} \gg a_s \quad \text{où} \quad \Delta a_b= a_b + \langle a_b\rangle \quad et \quad  \langle a_b \rangle = 0 $$
+\begin{enumerate}[label =(\alph*)]
+   \item \textbf{Moyen du signal:}\\
+Puisque le signal envoyer est le même à chaque mesure et que le bruit est aléatoire de moyen nulle. on peut répéter la mesure et faire la moyenne, pour faire diminuer le bruit.\\
+
+On moyen le signal:
+\begin{align*}
+\langle a \rangle &= \frac{1}{N}\sum_i^N a_i\\
+&=\frac{1}{N}\sum_i^N \left(a_s + a_b\right)\\
+&= \frac{1}{N}\sum_i^N a_s + \frac{1}{N}\sum_i^N a_b\\
+&=\langle a_s \rangle +\langle a_b \rangle
+\end{align*}
+On sais que $\langle a \rangle=0$ et puisque le signal $a_s$ est toujours le même, ca moyen est égale au signal. $\langle a_s \rangle=a_s$.\\
+on a donc 
+$$\langle a_s \rangle +\langle a_b \rangle = a_s + 0 = \boxed{a_s}$$
+On récupère donc le signal original $a_s$
+
+\item \textbf{Distinction du bruit}\\
+on cherche a savoir de fois on doit envoyer un signal pour qu'il soit distingable du bruit. En d'autre mots, on cherche a avoir la relation entre on souhaite que l'amplitude du signal $a_s$ soit supérieure ou comparable
+à l'incertitude associée au bruit moyen après $N$ mesures :\\
+
+Pour pouvoir distinguer le signal du bruit, on souhaite avoir
+
+\[
+\boxed{
+a_s \gtrsim \Delta\overline{a}_b
+}.
+\]
+
+Par définition,
+
+\begin{align*}
+\Delta\overline{a}_b &= \sqrt{\operatorname{Var}(\overline{a}_b)}.\\
+\operatorname{Var}(\overline{a}_b) &= \operatorname{Var}\left(\frac{1}{N}\sum_{i=1}^{N}a_{b,i}\right).\\
+\operatorname{Var}(\overline{a}_b) &= \frac{1}{N^2}\operatorname{Var}\left(\sum_{i=1}^{N}a_{b,i}\right).\\
+\operatorname{Var}(\overline{a}_b) &= \frac{1}{N^2}\sum_{i=1}^{N}\operatorname{Var}(a_{b,i}).
+\end{align*}
+
+Puisque
+
+\[
+\operatorname{Var}(a_{b,i})
+=
+(\Delta a_b)^2,
+\]
+
+on obtient
+
+\[
+\operatorname{Var}(\overline{a}_b)
+=
+\frac{1}{N^2}
+N(\Delta a_b)^2
+=
+\frac{(\Delta a_b)^2}{N}.
+\]
+
+Ainsi,
+
+\[
+\boxed{
+\Delta\overline{a}_b
+=
+\frac{\Delta a_b}{\sqrt{N}}
+}.
+\]
+
+On remplace ce résultat dans la condition permettant de distinguer
+le signal du bruit :
+
+\[
+a_s
+\gtrsim
+\frac{\Delta a_b}{\sqrt{N}}.
+\]
+
+On isole alors $N$ :
+
+\[
+a_s\sqrt{N}
+\gtrsim
+\Delta a_b,
+\]
+
+\[
+\sqrt{N}
+\gtrsim
+\frac{\Delta a_b}{a_s},
+\]
+
+et finalement,
+
+\[
+\boxed{
+N
+\gtrsim
+\frac{(\Delta a_b)^2}{a_s^2}
+}.
+\]
+
+Ainsi, le nombre de mesures nécessaires correspond approximativement
+au rapport entre l'intensité du bruit $(\Delta a_b)^2$ et l'intensité
+du signal $a_s^2$.
+\end{enumerate}
+\end{question}
+
+%======================================================
+%question 2
+%======================================================
+\begin{question}{Configurations de bosons}
+\begin{enumerate}[label=(\alph*)]
+   \item 
+
+On considère $n$ barres verticales identiques et $p$ objets
+identiques. On possède donc au total
+
+\[
+n+p
+\]
+
+éléments à ordonner.
+
+Si tous les éléments étaient différents, il y aurait
+
+\[
+(n+p)!
+\]
+
+façons de les ordonner. Cependant, les $p$ objets sont identiques, donc
+les $p!$ permutations entre les objets ne donnent pas de nouveaux
+arrangements. De même, les $n$ barres identiques. 
+
+Le nombre d'arrangements distincts est donc
+
+\[
+\boxed{
+\Omega
+=
+\frac{(n+p)!}{n!p!}
+}.
+\]
+
+On peut également écrire
+
+\[
+\boxed{
+\Omega =
+\binom{n+p}{p} = \frac{(n+p)!}{p!((n+p)-p)!} = \frac{(n+p)!}{p!n!}
+=
+\binom{n+p}{n} 
+%= \frac{(n+p)!}{n!((p+n)-n)!}
+}.
+\]
+
+\bigskip
+
+\item On considère maintenant $N$ particules identiques que l'on
+souhaite répartir dans $m$ boîtes. Chaque boite peut contenir un nombre
+arbitraire de particules.
+
+On représente les $N$ particules par des objets identiques. Pour séparer
+les $m$ boîtes, on a besoin de
+
+\[
+m-1
+\]
+
+barres verticales.\\
+exemple pour 5 boite, 10 objets : $\underbrace{ooo|}_{boite 1}oo\underbrace{|\hspace{0.2 cm}|}_{boite 3}ooo\underbrace{|oo}_{boite 5}$\\
+
+Le problème revient donc à ordonner $N$ objets identiques et $m-1$
+barres identiques.
+
+En utilisant le résultat de la partie A, on pose
+
+\[
+p=N
+\qquad \text{et} \qquad
+n=m-1.
+\]
+
+On obtient donc
+
+\[
+\Omega
+=
+\frac{(N+m-1)!}{N!(m-1)!}.
+\]
+
+Le nombre de façons de répartir $N$ bosons identiques dans $m$
+niveaux d'énergie est
+
+\[
+\boxed{
+\Omega_B
+=
+\frac{(N+m-1)!}{N!(m-1)!}
+=
+\binom{N+m-1}{N}
+}.
+\]
+
+% \textbf{Intuition :} les bosons sont identiques et plusieurs bosons
+% peuvent occuper le même niveau d'énergie. Les $m-1$ barres servent donc
+% simplement à séparer les $N$ particules entre les $m$ niveaux.
+\end{enumerate}
+
+\end{question}
+
+%======================================================
+%question 3
+%======================================================
+\begin{question}{Configurations de fermions}
+
+On considère $N$ fermions identiques que l'on souhaite répartir dans
+$M$ niveaux d'énergie, avec
+
+\[
+M>N.
+\]
+
+Contrairement aux bosons, un niveau d'énergie ne peut contenir qu'un
+seul fermion. Chaque niveau possède donc seulement deux possibilités :
+
+\[
+\text{vide}
+\qquad \text{ou} \qquad
+\text{occupé}.
+\]
+
+Comme les fermions sont identiques, leur ordre n'a pas d'importance.
+Il suffit donc de choisir quels $N$ niveaux parmi les $M$ niveaux
+disponibles seront occupés.
+
+Le nombre de façons de choisir $N$ niveaux parmi $M$ est donné par
+
+\[
+\binom{M}{N}.
+\]
+
+On obtient donc
+
+\[
+\boxed{
+\Omega_F
+=
+\binom{M}{N}
+=
+\frac{M!}{N!(M-N)!}
+}.
+\]
+
+% \textbf{Intuition :} contrairement aux bosons, plusieurs fermions ne
+% peuvent pas occuper le même niveau d'énergie. Le problème revient donc
+% simplement à choisir $N$ niveaux occupés parmi les $M$ niveaux
+% disponibles.
+\end{question}
+
+
+
+\end{document}
