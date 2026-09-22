@@ -77,32 +77,32 @@
 On note $a = \text{signal total}$, \quad $a_s= \text{signal désiré}$, \quad $a_b = \text{bruit}$, 
 
 On a que: 
-$$\sqrt{(\Delta a_b)^2} \gg a_s \quad \text{où} \quad \Delta a_b= a_b + \langle a_b\rangle \quad et \quad  \langle a_b \rangle = 0 $$
+$$\sqrt{(\Delta a_b)^2} \gg a_s \quad \text{où} \quad \Delta a_b= a_b - \langle a_b\rangle \quad et \quad  \langle a_b \rangle = 0 $$
 \begin{enumerate}[label =(\alph*)]
-   \item \textbf{Moyen du signal:}\\
-Puisque le signal envoyer est le même à chaque mesure et que le bruit est aléatoire de moyen nulle. on peut répéter la mesure et faire la moyenne, pour faire diminuer le bruit.\\
+   \item \textbf{Moyenne du signal:}\\
+Puisque le signal envoyer est le même à chaque mesure et que le bruit est aléatoire de moyenne nulle. On peut répéter la mesure et faire la moyenne, pour faire diminuer le bruit.\\
 
-On moyen le signal:
+On moyenne le signal:
 \begin{align*}
 \langle a \rangle &= \frac{1}{N}\sum_i^N a_i\\
 &=\frac{1}{N}\sum_i^N \left(a_s + a_b\right)\\
 &= \frac{1}{N}\sum_i^N a_s + \frac{1}{N}\sum_i^N a_b\\
 &=\langle a_s \rangle +\langle a_b \rangle
 \end{align*}
-On sais que $\langle a \rangle=0$ et puisque le signal $a_s$ est toujours le même, ca moyen est égale au signal. $\langle a_s \rangle=a_s$.\\
-on a donc 
+On sais que $\langle a_b \rangle=0$. Puisque le signal $a_s$ est toujours le même, la moyenne est égale au signal. $\langle a_s \rangle=a_s$.\\
+On a donc 
 $$\langle a_s \rangle +\langle a_b \rangle = a_s + 0 = \boxed{a_s}$$
 On récupère donc le signal original $a_s$
 
 \item \textbf{Distinction du bruit}\\
-on cherche a savoir de fois on doit envoyer un signal pour qu'il soit distingable du bruit. En d'autre mots, on cherche a avoir la relation entre on souhaite que l'amplitude du signal $a_s$ soit supérieure ou comparable
+On cherche à savoir combien de fois on doit envoyer un signal pour qu'il soit distinguable du bruit. En d'autres mots, on souhaite que l'amplitude du signal $a_s$ soit supérieure ou comparable
 à l'incertitude associée au bruit moyen après $N$ mesures :\\
 
 Pour pouvoir distinguer le signal du bruit, on souhaite avoir
 
 \[
 \boxed{
-a_s \gtrsim \Delta\overline{a}_b
+a_s \gg \Delta\overline{a}_b
 }.
 \]
 
@@ -149,7 +149,7 @@ le signal du bruit :
 
 \[
 a_s
-\gtrsim
+\gg
 \frac{\Delta a_b}{\sqrt{N}}.
 \]
 
@@ -157,13 +157,13 @@ On isole alors $N$ :
 
 \[
 a_s\sqrt{N}
-\gtrsim
+\gg
 \Delta a_b,
 \]
 
 \[
 \sqrt{N}
-\gtrsim
+\gg
 \frac{\Delta a_b}{a_s},
 \]
 
@@ -172,7 +172,7 @@ et finalement,
 \[
 \boxed{
 N
-\gtrsim
+\gg
 \frac{(\Delta a_b)^2}{a_s^2}
 }.
 \]
@@ -182,7 +182,7 @@ au rapport entre l'intensité du bruit $(\Delta a_b)^2$ et l'intensité
 du signal $a_s^2$.
 \end{enumerate}
 \end{question}
-
+\newpage
 %======================================================
 %question 2
 %======================================================
