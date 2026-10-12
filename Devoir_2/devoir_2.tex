@@ -1,0 +1,257 @@
+\documentclass[11pt]{article}
+
+\usepackage[french]{babel}
+
+\usepackage[T1]{fontenc}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{mathtools}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{tikz}
+\usepackage{hyperref}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usetikzlibrary{quantikz2,babel}
+
+\tikzset{qcircuit/.style={
+    column sep=.9cm,
+    row sep=0.7cm,
+    operator/.style={draw=black!80, line width=0.5pt, fill=gray!5, minimum height=0.7cm, minimum width=0.7cm},
+    phase/.style={draw=black!80, fill=black!20, circle, minimum size=4pt},
+    slice/.style={font=\footnotesize\itshape, color=gray!50, dashed}
+}}
+
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+   \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\makeatother
+
+\newcommand{\moy}[1]{\langle #1 \rangle}
+\newcommand{\pDer}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pDerd}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+
+\newcounter{questioncounter}
+\newenvironment{question}[1]{
+\refstepcounter{questioncounter}
+\noindent\rule{0.05\textwidth}{1pt}\,\,\raisebox{-.3\ht\strutbox}{\textbf{Question \thequestioncounter \hspace{5mm} #1}}\,\,\vhrulefill{1pt}\par\vspace{0.4cm}
+}{\par}
+
+%======================================================
+%en-tete
+%======================================================
+\begin{document}
+\selectlanguage{french}
+\noindent{\Large Anthony Wroblewski} \hfill {\Large \today}\\
+{\Large Nathan Brochu}
+
+\par\vspace{5mm}
+\begin{center}
+   {\Large PHQ344 - Physique Statistique 1} \\ \vspace{5mm}
+   {\LARGE\sffamily Devoir \#2} \\ \vspace{5mm}
+\end{center}
+
+%======================================================
+%question 1
+%======================================================
+\begin{question}{Ensemble microcanonique}
+Soit un système microcanonique de $N = 4$ spins avec des moments magnétiques $\mu_i = \pm \mu$ et une énergie totale $E = +2\mu H$.
+\\\\
+L'énergie totale est donnée par $E = -H \sum_{i=1}^4 \mu_i = +2\mu H$, ce qui implique que la somme des moments est :
+\begin{equation*}
+\sum_{i=1}^4 \mu_i = -2\mu
+\end{equation*}
+Pour obtenir une somme égale à $-2\mu$ avec 4 spins de valeur $\pm\mu$, il faut nécessairement avoir 3 spins avec un moment $-\mu$ et 1 spin avec un moment $+\mu$.
+\\\\
+Le nombre total de microétats accessibles possédant cette énergie est le nombre de façons de placer un spin $+\mu$ parmi 4 emplacements :
+\[
+\Omega = \binom{4}{1} = 4 \quad \text{donc} \quad \Omega = 4
+\]
+Les microétats correspondants sont $(-1, -1, -1, +1)\mu$, $(-1, -1, +1, -1)\mu$, $(-1, +1, -1, -1)\mu$ et $(+1, -1, -1, -1)\mu$.
+\\\\
+La probabilité qu'un spin individuel ait un moment $-\mu$ est :
+
+\begin{equation*}
+P(-\mu) = \dfrac{3}{4}
+\end{equation*}
+\\
+La probabilité qu'un spin individuel ait un moment $+\mu$ est : 
+\begin{equation*}
+P(+\mu) = \dfrac{1}{4}
+\end{equation*}
+
+
+L'aimantation moyenne du système se calcule par la moyenne de la somme des moments magnétiques sur tous les microétats accessibles :
+\[
+\text{Aimantation moyenne} = \frac{(-1 - 1 - 1 + 1)\mu}{4} = -\frac{1}{2}\mu
+\]
+\end{question}
+\newpage
+%======================================================
+%question 2
+%======================================================
+\begin{question}{Thermodynamique d'un gaz imparfait}
+On recherche la variation d'entropie $\Delta S = S_1 - S_0$. D'après le premier principe de la thermodynamique :
+\[
+\delta E = \delta Q + \delta W
+\]
+où $\delta Q$ représente le transfert thermique et $\delta W$ le travail transféré.
+\bigskip
+
+Pour une transformation réversible :
+\begin{itemize}[label=$$]
+    \item $\delta Q = T \, dS$ (car la température $T$ est constante)
+    \item $\delta W = -F \, dx = -P \, dV $
+\end{itemize}
+
+\bigskip 
+En substituant ces expressions dans le premier principe :
+
+\begin{equation*}
+\delta E = T \, dS - P \, dV
+\end{equation*}
+De l'équation $PV = N k_B (T + b T^2)$, on tire la pression $P = \dfrac{N k_B (T + b T^2)}{V}$. Ainsi :
+\[
+\delta E = T \, dS - \frac{dV}{V} N k_B (T + b T^2)
+\]
+En isolant $dS$ :
+\[
+dS = \frac{1}{T} \, \delta E + \frac{dV}{V} N k_B (1 + b T)
+\]
+En intégrant entre les états initial et final :
+\[
+\Delta S = \frac{1}{T} \int \delta E + N k_B (1 + b T) \int_{V_0}^{V_1} \frac{dV}{V}
+\]
+\[
+\Delta S = \frac{1}{T} \int \delta E + N k_B (1 + b T) \ln\left(\frac{V_1}{V_0}\right)
+\]
+
+On sait par l'énoncé que l'énergie $E$ est indépendante du volume $V$ et de la pression $P$. Comme la température $T$ est également fixe ($T = \text{cte}$), l'énergie reste constante au cours du processus, soit $dE = 0$.
+\[
+\delta E = \delta Q + \delta W \implies \delta E = T \, dS - P \, dV = 0
+\]
+Par conséquent, le terme d'intégration de l'énergie s'annule ($\int \delta E = 0$), ce qui nous donne directement :
+\[
+\Delta S = N k_B (1 + b T) \ln\left(\frac{V_1}{V_0}\right)
+\]
+
+\end{question}
+\newpage
+%======================================================
+%question 3
+%======================================================
+\begin{question}{Réfrigérateur à absorption}
+\subsubsection*{a) Contrainte (Conservation de l'énergie)}
+Considérons le cycle de fonctionnement de la machine ($\Delta E = dQ = 0$). Les chaleurs entrantes sont $Q_f$ (flamme) et $Q_r$ (réfrigérateur), tandis que la chaleur rejetée vers l'atmosphère est $Q_a$.
+\[
+Q_a = Q_f + Q_r
+\]
+
+\subsubsection*{b) Coefficient de performance $\eta_{\max}$}
+Le second principe de la thermodynamique impose que la variation totale d'entropie lors d'un cycle soit supérieure ou égale à zéro : $\Delta S_{\text{tot}} \ge 0$. L'entropie des réservoirs varie selon :
+\[
+\Delta S = \frac{Q_a}{T_a} - \frac{Q_r}{T_r} - \frac{Q_f}{T_f} \ge 0
+\]
+En réarrangeant les termes :
+\[
+\frac{Q_a}{T_a} \ge \frac{Q_r}{T_r} + \frac{Q_f}{T_f}
+\]
+En utilisant la relation $Q_a = Q_r + Q_f$:
+\[
+\frac{Q_r + Q_f}{T_a} \ge \frac{Q_r}{T_r} + \frac{Q_f}{T_f}
+\]
+En divisant toute l'inégalité par $Q_f$ :
+\[
+\frac{Q_r}{Q_f} \frac{1}{T_a} + \frac{1}{T_a} \ge \frac{Q_r}{Q_f} \frac{1}{T_r} + \frac{1}{T_f}
+\]
+Puisque $\eta = \dfrac{Q_r}{Q_f}$, on exprime :
+\[
+\frac{1}{T_a} - \frac{1}{T_f} \ge \eta \left(\frac{1}{T_r} - \frac{1}{T_a}\right)
+\]
+On isole $\eta$ :
+\[
+\eta \le \left(\frac{1}{T_a} - \frac{1}{T_f}\right) \left(\frac{1}{T_r} - \frac{1}{T_a}\right)^{-1}
+\]
+La valeur maximale du coefficient de performance est donc :
+\[
+\eta_{\max} = \left(\frac{1}{T_a} - \frac{1}{T_f}\right) \left(\frac{1}{T_r} - \frac{1}{T_a}\right)^{-1}
+\]
+
+\subsubsection*{c) $T_f$ élevée}
+En réécrivant la formule de $\eta_{\max}$ en mettant en valeur le facteur contenant $T_f$ :
+\[
+\eta_{\max} = \left(\frac{1}{T_a} - \frac{1}{T_f}\right) \left(\frac{T_r T_a}{T_a - T_r}\right)
+\]
+Pour des températures $T_a$ et $T_r$ fixes avec $T_a > T_r$, le terme $\left(\frac{T_r T_a}{T_a - T_r}\right)$ est une constante positive.
+
+Pour maximiser $\eta_{\max}$, on veut que le terme $\left(\frac{1}{T_a} - \frac{1}{T_f}\right)$ soit le plus grand possible. Cela nécessite de rendre le terme $\dfrac{1}{T_f}$ le plus petit possible, c'est-à-dire d'avoir $T_f$ la plus grande possible ($\frac{1}{T_f} \to 0$).
+
+\end{question}
+\newpage
+%======================================================
+%question 4
+%======================================================
+\begin{question}{Questions courtes}
+
+\subsubsection*{a)}
+D'après le second principe de la thermodynamique ($\Delta S \ge 0$), la chaleur circule spontanément du corps le plus chaud vers le corps le plus froid.
+\[
+\Delta S = -\frac{Q_{\text{ext}}}{T_{\text{ext}}} + \frac{Q_{\text{fluide}}}{T_{\text{fluide}}} \ge 0
+\]
+Selon le premier principe ($\Delta E = Q_{\text{ext}} - Q_{\text{fluide}} = 0$), on a $Q_{\text{ext}} = Q_{\text{fluide}}$. Ainsi :
+\[
+\frac{Q_{\text{ext}}}{T_{\text{fluide}}} \ge \frac{Q_{\text{ext}}}{T_{\text{ext}}} \implies T_{\text{ext}} \ge T_{\text{fluide}}
+\]
+Pour absorber de la chaleur de l'environnement extérieur ($Q_{\text{ext}} > 0$), le fluide doit être plus froid que l'air extérieur ($T_{\text{fluide}} < T_{\text{ext}}$) afin que le transfert thermique s'effectue spontanément vers le fluide.
+
+\subsubsection*{b)}
+\begin{itemize}\itemsep0.1em
+    \item Chaleur absorbée : $Q_{100} = 2.0\,\text{J}$ à $T_{100} = 100\,^\circ\text{C} = 373.15\,\text{K}$
+    \item Chaleur rejetée : $Q_0 = 1.0\,\text{J}$ à $T_0 = 0\,^\circ\text{C} = 273.15\,\text{K}$
+    \item Travail produit : $W = 1.0\,\text{J}$
+\end{itemize}
+\bigskip
+
+Il faut que la conservation de l'énergie soit respectée :
+\[
+\Delta E = Q_{100} - Q_0 - W = 2.0 - 1.0 - 1.0 = 0\,\text{J}
+\]
+Le premier principe est respecté ($Q_{100} - Q_0 = W$).
+\bigskip
+
+Il faut aussi que l'entropie augmente :
+\[
+\Delta S = -\frac{Q_{100}}{T_{100}} + \frac{Q_0}{T_0} \ge 0 \implies \frac{Q_0}{T_0} \ge \frac{Q_{100}}{T_{100}}
+\]
+Étant donné que $Q_0 = 1.0\,\text{J}$ et $Q_{100} = 2.0\,\text{J}$, on a $Q_0 = \frac{1}{2} Q_{100}$. En substituant :
+\[
+\frac{\frac{1}{2} Q_{100}}{T_0} \ge \frac{Q_{100}}{T_{100}} \implies T_{100} \ge 2 T_0
+\]
+Vérifions numériquement :
+\[
+373.15\,\text{K} \ge 2 \cdot 273.15\,\text{K} \implies 373.15\,\text{K} \ge 546.3\,\text{K}
+\]
+Puisque $373.15\,\text{K} \ge 546.3\,\text{K}$ est une inégalité fausse, la condition du second principe $\Delta S \ge 0$ n'est pas respectée. Cette machine n'est pas possible selon les lois de la thermodynamique car elle ne satisfait pas le second principe.
+\end{question}
+
+
+\end{document}
