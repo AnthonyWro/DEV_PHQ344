@@ -76,6 +76,7 @@
 \begin{question}{ {\Large \#} Ensemble microcanonique}
 Soit un système microcanonique de $N = 4$ spins avec des moments magnétiques $\mu_i = \pm \mu$ et une énergie totale $E = +2\mu H$.
 \\\\
+%pourquoi ya un moin la devant le H ici
 L'énergie totale est donnée par $E = -H \sum_{i=1}^4 \mu_i = +2\mu H$, ce qui implique que la somme des moments est :
 \begin{equation*}
 \sum_{i=1}^4 \mu_i = -2\mu
@@ -110,6 +111,7 @@ L'aimantation moyenne du système se calcule par la moyenne de la somme des mome
 %question 2
 %======================================================
 \begin{question}{Thermodynamique d'un gaz imparfait}
+    
 On recherche la variation d'entropie $\Delta S = S_1 - S_0$. D'après le premier principe de la thermodynamique :
 \[
 \delta E = \delta Q + \delta W
@@ -160,6 +162,45 @@ Par conséquent, le terme d'intégration de l'énergie s'annule ($\int \delta E 
 %question 3
 %======================================================
 \begin{question}{Réfrigérateur à absorption}
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    reservoir/.style={
+        draw, rounded corners, align=center,
+        minimum width=3.5cm, minimum height=1.2cm
+    },
+    flux/.style={->, thick, >=stealth}
+]
+    \node[reservoir, fill=red!12] (flamme) at (0,3)
+        {Flamme\\$T_f$};
+
+    \node[reservoir, fill=gray!12] (machine) at (0,0)
+        {Réfrigérateur à absorption\\Cycle : $\Delta E=0$, $W=0$};
+
+    \node[reservoir, fill=blue!12] (froid) at (-5,0)
+        {Milieu à réfrigérer\\$T_r$};
+
+    \node[reservoir, fill=green!12] (atmosphere) at (5,0)
+        {Atmosphère\\$T_a$};
+
+    \draw[flux, red!70!black]
+        (flamme) -- node[right] {$Q_f>0$} (machine);
+
+    \draw[flux, blue!70!black]
+    (froid) -- node[above=10pt] {$Q_r>0$} (machine);
+
+    \draw[flux, green!40!black]
+    (machine) -- node[above=10pt] {$Q_a>0$} (atmosphere);
+
+    \node[align=center] at (0,-1.8)
+        {$T_f>T_a>T_r$\\[4pt]
+         Conservation de l'énergie : $Q_a=Q_f+Q_r$};
+\end{tikzpicture}
+\caption{Flux de chaleur d'un réfrigérateur à absorption
+fonctionnant sans échange de travail.}
+\label{fig:refrigerateur-absorption}
+\end{figure}
+
 \subsubsection*{a) Contrainte (Conservation de l'énergie)}
 Considérons le cycle de fonctionnement de la machine ($\Delta E = dQ = 0$). Les chaleurs entrantes sont $Q_f$ (flamme) et $Q_r$ (réfrigérateur), tandis que la chaleur rejetée vers l'atmosphère est $Q_a$.
 \[
